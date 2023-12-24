@@ -1,7 +1,7 @@
 package com.bridgeLabz;
 public class Main {
     public static void main(String[] args) {
-        //welcome message 
+        //welcome message
         System.out.println("Welcome to Invoice Generator Program");
     }
 }

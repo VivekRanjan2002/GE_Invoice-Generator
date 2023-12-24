@@ -9,4 +9,6 @@ public class Rider {
         this.distance=distance;
         this.time=time;
     }
+
+
 }
