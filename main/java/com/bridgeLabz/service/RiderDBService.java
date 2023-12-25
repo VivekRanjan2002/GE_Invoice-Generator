@@ -31,6 +31,28 @@ public class RiderDBService {
         }
         return riderMap;
     }
+   // retrieve Invoice group by UserID and populate it in list
+    public List<Map<String, Object>> retrieveRidersDBInvoiceGroupBYID() throws Exception{
+        List<Map<String,Object>> riderMapList=new ArrayList<>();
+        String sqlQuery="select UserID, count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(Fare) as Total_Fare  from RideRepository group by UserID;";
+        try(Connection connection= getConnection()){
+            Statement statement= connection.createStatement();
+            ResultSet resultSet= statement.executeQuery(sqlQuery);
+            while(resultSet.next()){
+                Map<String,Object> riderEntry= new HashMap<>();
+                int UserID= resultSet.getInt("UserID");
+                int totalRideNo = resultSet.getInt("Total_Ride");
+                Double avgFare = resultSet.getDouble("Avg_Fare");
+                Double totalFare = resultSet.getDouble("Total_Fare");
+                riderEntry.put("UserID",UserID);
+                riderEntry.put("TotalRideNo",totalRideNo);
+                riderEntry.put("AvgFare",avgFare);
+                riderEntry.put("TotalFare",totalFare);
+                riderMapList.add(riderEntry);
+            }
+        }
+        return riderMapList;
+    }
     // retrieve the data of table using execution of sqlaQuery
     private List<Rider> RiderDataUsingDB(String sqlQuery) {
     List<Rider> riderList= new ArrayList<>();

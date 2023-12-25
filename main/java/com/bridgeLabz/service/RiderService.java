@@ -22,4 +22,10 @@ public class RiderService {
         riderMap= riderDBService.retrieveRidersDBInvoice();
     return riderMap;
     }
+   // read Invoice generated group by userID
+    public List<Map<String, Object>> retriveRidersInvoiceGroupByID() throws Exception {
+        List<Map<String, Object>> riderMapList= new ArrayList<>();
+        riderMapList= riderDBService.retrieveRidersDBInvoiceGroupBYID();
+        return riderMapList;
+    }
 }

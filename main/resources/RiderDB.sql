@@ -82,5 +82,14 @@ mysql> select count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(Fare) as 
 +------------+--------------------+------------+
 1 row in set (0.00 sec)
 
-
+//UC4
+mysql> select UserID, count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(Fare) as Total_Fare  from RideRepository group by UserID;
++--------+------------+--------------------+------------+
+| UserID | Total_Ride | Avg_Fare           | Total_Fare |
++--------+------------+--------------------+------------+
+|      1 |          3 | 35.666666666666664 |        107 |
+|      2 |          3 | 43.333333333333336 |        130 |
+|      3 |          1 |                  6 |          6 |
++--------+------------+--------------------+------------+
+3 rows in set (0.00 sec)
 
