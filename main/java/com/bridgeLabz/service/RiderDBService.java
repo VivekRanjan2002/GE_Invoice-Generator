@@ -71,10 +71,11 @@ public class RiderDBService {
         try {
             while (resultSet.next()) {
              int UserID= resultSet.getInt("UserID");
+             String rideType= resultSet.getString("RideType");
              Double distance= resultSet.getDouble("Distance(in Km)");
              Double time= resultSet.getDouble("Time(in min)");
              Double fare= resultSet.getDouble("Fare");
-             riderList.add(new Rider(UserID,distance,time,fare));
+             riderList.add(new Rider(UserID,rideType,distance,time,fare));
             }
         } catch (Exception e) {
            e.printStackTrace();

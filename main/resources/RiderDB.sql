@@ -93,3 +93,46 @@ mysql> select UserID, count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(F
 +--------+------------+--------------------+------------+
 3 rows in set (0.00 sec)
 
+//UC5
+mysql> Alter Table RideRepository
+    -> Add Column Fare Double
+    -> As
+    -> (Case when RideType="Normal" then
+    ->  (Case when (`Distance(in Km)`*10+`Time(in min)`)>5.0 then  (`Distance(in Km)`*10+`Time(in min)`) Else 5.0 end)
+    -> Else
+    ->  (Case when (`Distance(in Km)`*15+2*`Time(in min)`)>20.0 then  (`Distance(in Km)`*15+2*`Time(in min)`) Else 20.0 end) end );
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from RideRepository;
++--------+----------+-----------------+--------------+------+
+| UserID | RideType | Distance(in Km) | Time(in min) | Fare |
++--------+----------+-----------------+--------------+------+
+|      1 | Normal   |               5 |            5 |   55 |
+|      2 | Normal   |               1 |            3 |   13 |
+|      1 | Premium  |             4.5 |            2 | 71.5 |
+|      2 | Premium  |             5.5 |          3.5 | 89.5 |
+|      2 | Premium  |             5.5 |          3.5 | 89.5 |
+|      3 | Normal   |             0.5 |            1 |    6 |
+|      1 | Premium  |             0.1 |            2 |   20 |
++--------+----------+-----------------+--------------+------+
+7 rows in set (0.00 sec)
+// UC3 revised
+mysql> select count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(Fare) as Total_Fare from RideRepository;
++------------+--------------------+------------+
+| Total_Ride | Avg_Fare           | Total_Fare |
++------------+--------------------+------------+
+|          7 | 49.214285714285715 |      344.5 |
++------------+--------------------+------------+
+1 row in set (0.00 sec)
+//UC4 revised
+mysql> select UserID, count(UserID) as Total_Ride, Avg(Fare) as Avg_Fare , sum(Fare) as Total_Fare  from RideRepository group by UserID;
++--------+------------+--------------------+------------+
+| UserID | Total_Ride | Avg_Fare           | Total_Fare |
++--------+------------+--------------------+------------+
+|      1 |          3 | 48.833333333333336 |      146.5 |
+|      2 |          3 |                 64 |        192 |
+|      3 |          1 |                  6 |          6 |
++--------+------------+--------------------+------------+
+3 rows in set (0.00 sec)
+
